@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banknote Detection | Linear SVM</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #101827, #173b55, #087e8b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .tag {
+            color: #5eead4;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 30px;
+        }
+
+        .description {
+            text-align: center;
+            color: #d2e4ed;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #6b8798;
+            border-radius: 9px;
+            background: #f4f9fc;
+            color: #152333;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #5eead4;
+            box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.18);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #5eead4;
+            color: #102b3a;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #99f6e4;
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 24px;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result h2 {
+            font-size: 20px;
+            margin-top: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #c5d8e3;
+            font-size: 12px;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 23px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="tag">AI • MACHINE LEARNING • SECURITY</p>
+
+        <h1>Banknote Detection</h1>
+
+        <p class="description">
+            Analyze banknote image features using a
+            Linear Support Vector Machine (SVM) model.
+        </p>
+
+        <form action="/predict" method="POST">
+            <div class="form-grid">
+                <div>
+                    <label for="variance">Variance</label>
+                    <input type="number" step="any" id="variance"
+                           name="variance" placeholder="e.g. 3.6216"
+                           required>
+                </div>
+
+                <div>
+                    <label for="skewness">Skewness</label>
+                    <input type="number" step="any" id="skewness"
+                           name="skewness" placeholder="e.g. 8.6661"
+                           required>
+                </div>
+
+                <div>
+                    <label for="curtosis">Kurtosis</label>
+                    <input type="number" step="any" id="curtosis"
+                           name="curtosis" placeholder="Enter kurtosis"
+                           required>
+                </div>
+
+                <div>
+                    <label for="entropy">Entropy</label>
+                    <input type="number" step="any" id="entropy"
+                           name="entropy" placeholder="Enter entropy"
+                           required>
+                </div>
+            </div>
+
+            <button type="submit">Analyze Banknote →</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result">
+                <p>ANALYSIS RESULT</p>
+                <h2>{{ prediction }}</h2>
+            </div>
+        {% endif %}
+
+        <p class="footer">
+            Academic Project | Powered by Linear SVM
+        </p>
+    </div>
+</body>
+</html>
